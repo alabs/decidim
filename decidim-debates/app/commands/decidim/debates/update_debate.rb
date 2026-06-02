@@ -46,7 +46,6 @@ module Decidim
       def extra_params = { visibility: "public-only" }
 
       def attributes
-        parsed_title = Decidim::ContentProcessor.parse(form.title, current_organization: form.current_organization).rewrite
         parsed_description = Decidim::ContentProcessor
                              .parse_with_processor(
                                :inline_images,
@@ -55,7 +54,7 @@ module Decidim
                              )
                              .rewrite
         super.merge({
-                      title: { I18n.locale => parsed_title },
+                      title: { I18n.locale => form.title },
                       description: { I18n.locale => parsed_description }
                     })
       end
