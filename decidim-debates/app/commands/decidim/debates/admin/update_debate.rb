@@ -30,16 +30,10 @@ module Decidim
         private
 
         def attributes
-          parsed_description = Decidim::ContentProcessor
-                               .parse_with_processor(
-                                 :inline_images,
-                                 Decidim::ContentProcessor.parse(form.description, current_organization: form.current_organization),
-                                 current_organization: form.current_organization
-                               )
-                               .rewrite
+          parsed_description = Decidim::ContentProcessor.parse(form.description, current_organization: form.current_organization).rewrite
 
           attrs = {
-            title: form.title,
+            title: { I18n.locale => form.title },
             description: parsed_description
           }
 

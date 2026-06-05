@@ -58,7 +58,7 @@ module Decidim
         def attributes
           parsed_body = Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization).rewrite
           {
-            title: form.title,
+            title: { I18n.locale => form.title },
             body: parsed_body,
             taxonomizations: form.taxonomizations,
             component: form.component,

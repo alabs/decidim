@@ -53,10 +53,11 @@ module Decidim
 
         def update_proposal
           parsed_body = Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization).rewrite
+
           Decidim.traceability.update!(
             proposal,
             form.current_user,
-            title: form.title,
+            title: { I18n.locale => form.title },
             body: parsed_body,
             taxonomizations: form.taxonomizations,
             address: form.address,

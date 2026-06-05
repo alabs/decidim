@@ -93,13 +93,7 @@ module Decidim
         {
           title: { I18n.locale => form.title },
           body: {
-            I18n.locale => Decidim::ContentProcessor
-                           .parse_with_processor(
-                             :inline_images,
-                             Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization),
-                             current_organization: form.current_organization
-                           )
-                           .rewrite
+            I18n.locale => Decidim::ContentProcessor.parse(form.body, current_organization: form.current_organization).rewrite
           },
           taxonomizations: form.taxonomizations,
           address: form.address,
