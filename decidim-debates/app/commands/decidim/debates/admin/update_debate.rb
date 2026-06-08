@@ -33,7 +33,7 @@ module Decidim
           parsed_description = Decidim::ContentProcessor.parse(form.description, current_organization: form.current_organization).rewrite
 
           attrs = {
-            title: { I18n.locale => form.title },
+            title: form.title,
             description: parsed_description
           }
 

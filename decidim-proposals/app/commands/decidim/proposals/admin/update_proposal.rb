@@ -57,7 +57,7 @@ module Decidim
           Decidim.traceability.update!(
             proposal,
             form.current_user,
-            title: { I18n.locale => form.title },
+            title: form.title,
             body: parsed_body,
             taxonomizations: form.taxonomizations,
             address: form.address,
