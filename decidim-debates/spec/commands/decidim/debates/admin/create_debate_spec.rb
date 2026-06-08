@@ -12,7 +12,7 @@ describe Decidim::Debates::Admin::CreateDebate do
   let(:comments_layout) { "single_column" }
   let(:attachments) { [] }
   let(:description) { { en: "description" } }
-  let(:title) {  { en: "title" } }
+  let(:title) { { en: "title" } }
   let(:taxonomizations) do
     2.times.map { build(:taxonomization, taxonomy: create(:taxonomy, :with_parent, organization:), taxonomizable: nil) }
   end
