@@ -67,6 +67,37 @@ describe Decidim::Debates::Admin::UpdateDebate do
       end
     end
 
+    context "when title has a user mention" do
+      let(:mentioned_user) { create(:user, :confirmed, organization:) }
+      let(:form) do
+        double(
+          invalid?: invalid,
+          current_user: user,
+          title: { en: "title mentioning @#{mentioned_user.nickname}" },
+          description:,
+          information_updates: { en: "information_updates" },
+          instructions: { en: "instructions" },
+          start_time: 1.day.from_now,
+          end_time: 1.day.from_now + 1.hour,
+          taxonomizations:,
+          current_organization: organization,
+          comments_enabled: true,
+          comments_layout:,
+          attachment: attachment_params,
+          add_documents: uploaded_files,
+          documents: current_files,
+          errors: ActiveModel::Errors.new(self)
+        )
+      end
+
+      it "does not rewrite the mention to the mentioned user GID" do
+        subject.call
+
+        expect(debate.title.values.join(" ")).not_to include(mentioned_user.to_global_id.to_s)
+        expect(debate.title.values.join(" ")).to include("@#{mentioned_user.nickname}")
+      end
+    end
+
     it "sets the taxonomies" do
       subject.call
       expect(debate.reload.taxonomies).to match_array(taxonomizations.map(&:taxonomy))
